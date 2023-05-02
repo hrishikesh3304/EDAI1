@@ -10,9 +10,10 @@ import android.view.View;
 
 public class userType extends AppCompatActivity {
 
+
     CardView Doctor_Card, Patient_Card;
  //Faltu commit
-
+//Chinmayee
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
