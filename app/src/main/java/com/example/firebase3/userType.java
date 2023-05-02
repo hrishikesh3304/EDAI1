@@ -11,7 +11,7 @@ import android.view.View;
 public class userType extends AppCompatActivity {
 
     CardView Doctor_Card, Patient_Card;
- //Faltu commitw
+ //Faltu commitww
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
