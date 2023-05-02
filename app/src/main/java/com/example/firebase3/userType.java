@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 public class userType extends AppCompatActivity {
 
     CardView Doctor_Card, Patient_Card;
+
  //Faltu commitww
 
     @Override
@@ -18,8 +20,10 @@ public class userType extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type);
 
-        Doctor_Card = findViewById(R.id.cardViewStudent);
-        Patient_Card = findViewById(R.id.cardViewTeacher);
+        final RelativeLayout relativeLayout;
+        Doctor_Card = findViewById(R.id.cardViewTeacher);
+        Patient_Card = findViewById(R.id.cardViewStudent);
+
 
         Doctor_Card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,7 @@ public class userType extends AppCompatActivity {
                 myEdit.commit();
                 Intent intent = new Intent(userType.this, MainActivity.class);
                 startActivity(intent);
+
 
             }
         });

@@ -2,7 +2,11 @@ package com.example.firebase3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,7 +32,11 @@ public class Register extends AppCompatActivity {
     FirebaseFirestore fstore;
     String userID;
 
+    ConstraintLayout constraintLayout;
 
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +52,18 @@ public class Register extends AppCompatActivity {
         TextView editTextTextEmailAddress = findViewById(R.id.editTextTextEmailAddress);
         editTextTextPassword3=findViewById(R.id.editTextTextPassword3);
         button4=findViewById(R.id.button4);
+        constraintLayout=findViewById(R.id.Register_Layout);
         editTextTextPersonName=findViewById(R.id.editTextTextPersonName);
         auth=FirebaseAuth.getInstance();
         fstore=FirebaseFirestore.getInstance();
         editTextTextPassword=findViewById(R.id.editTextTextPassword);
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        if(sh.getString("User_Type", "").equals("Doctor"))
+        {
+            constraintLayout.setBackgroundResource(R.color.teal_700);
+        }
+
 
         button4.setOnClickListener(new View.OnClickListener() {
             @Override

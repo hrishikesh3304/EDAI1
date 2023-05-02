@@ -2,8 +2,12 @@ package com.example.firebase3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,18 +26,26 @@ public class Login extends AppCompatActivity {
     TextView editTextTextPassword2;
     Button button;
     FirebaseAuth auth;
+    ConstraintLayout constraintLayout;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         editTextTextEmailAddress2=findViewById(R.id.editTextTextEmailAddress2);
         editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
         button=findViewById(R.id.button);
         auth= FirebaseAuth.getInstance();
+        constraintLayout=findViewById(R.id.Login_Layout);
+
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        if(sh.getString("User_Type", "").equals("Doctor"))
+        {
+            constraintLayout.setBackgroundResource(R.color.teal_700);
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

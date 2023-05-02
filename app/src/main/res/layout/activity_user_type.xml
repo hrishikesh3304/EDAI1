@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6B77E5"
+    android:background="@color/white"
+
+
+
     tools:context=".userType">
 
     <TextView
@@ -12,8 +15,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/whoAreYou"
         android:textSize="30sp"
-        android:textColor="#FFFFFFFF"
-        android:text="Login as a"
+        android:textColor="@color/black"
+        android:text="Login as"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
