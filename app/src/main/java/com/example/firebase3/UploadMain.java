@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -36,15 +37,16 @@ public class UploadMain extends AppCompatActivity {
     private Button mButtonUpload;
     private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
-    private ImageView mImageView;
+    private PDFView mpdfView;;
     private ProgressBar mProgressBar;
 
-    private Uri mPdfUri;
+    private Uri uri;
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
     private StorageTask mUploadTask;
+    private PDFView pdfView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,7 +58,7 @@ public class UploadMain extends AppCompatActivity {
         mButtonUpload = findViewById(R.id.button_upload);
         mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
         mEditTextFileName = findViewById(R.id.edit_file_text_name);
-        mImageView = findViewById(R.id.image_view);
+        mpdfView= findViewById(R.id.pdfView);
         mProgressBar = findViewById(R.id.progress_bar);
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
@@ -92,21 +94,22 @@ public class UploadMain extends AppCompatActivity {
 
     private void openFileChooser() {
         Intent intent = new Intent();
-        intent.setType("application/pdf,image/*");
+        intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            mPdfUri = data.getData();
 
-
-        }
+            uri = data.getData();
+            if (pdfView != null ) {
+                pdfView.fromUri(uri).load();
+            }else {
+                Log.e("PDFView", "pdfView object is null");
+            }
     }
 
     private String getFileExtension(Uri uri) {
@@ -116,11 +119,11 @@ public class UploadMain extends AppCompatActivity {
     }
 
     private void uploadFile() {
-        if (mPdfUri != null) {
+        if (uri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(mPdfUri));
+                    + "." + getFileExtension(uri));
 
-            mUploadTask = fileReference.putFile(mPdfUri)
+            mUploadTask = fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

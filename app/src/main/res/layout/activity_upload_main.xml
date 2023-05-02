@@ -28,12 +28,11 @@
         android:hint="Enter File Name"
         android:textColor="@color/white" />
 
-    <ImageView
-        android:id="@+id/image_view"
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/white"
-
         android:layout_above="@id/progress_bar"
         android:layout_below="@id/edit_file_text_name"
         android:layout_marginTop="16dp" />
