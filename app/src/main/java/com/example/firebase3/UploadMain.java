@@ -29,9 +29,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class UploadMain extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int PICK_PDF_REQUEST = 1;
 
     private Button mButtonChooseImage;
     private Button mButtonUpload;
@@ -103,13 +106,17 @@ public class UploadMain extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-            uri = data.getData();
-            if (pdfView != null ) {
+            if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                uri = data.getData();
+                pdfView = findViewById(R.id.pdfView);
                 pdfView.fromUri(uri).load();
-            }else {
-                Log.e("PDFView", "pdfView object is null");
-            }
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(uri);
+                    pdfView.fromStream(inputStream).load();}
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
     private String getFileExtension(Uri uri) {
