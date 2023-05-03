@@ -54,11 +54,12 @@
                 <ImageView
                     android:layout_width="131dp"
                     android:layout_height="159dp"
-                    android:src="@drawable/img_2" />
+                    android:src="@drawable/medicalhistory" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medical History"
+                    android:textSize="18dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
@@ -91,11 +92,12 @@
                 <ImageView
                     android:layout_width="131dp"
                     android:layout_height="159dp"
-                    android:src="@drawable/invoice" />
+                    android:src="@drawable/folder" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medical Invoices"
+                    android:text="My Documents"
+                    android:textSize="18dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
@@ -130,11 +132,12 @@
                 <ImageView
                     android:layout_width="131dp"
                     android:layout_height="159dp"
-                    android:src="@drawable/img_1" />
+                    android:src="@drawable/bigfamily" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Other Documents"
+                    android:text="My Family"
+                    android:textSize="18dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
@@ -169,11 +172,12 @@
                 <ImageView
                     android:layout_width="131dp"
                     android:layout_height="159dp"
-                    android:src="@drawable/img" />
+                    android:src="@drawable/doctor" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medical Reports"
+                    android:text="My Doctors"
+                    android:textSize="18dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
