@@ -71,7 +71,7 @@ String userId;
             }
         });
 
-        cardDocumnet.setOnClickListener(new View.OnClickListener()
+     /*   cardDocumnet.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -88,7 +88,7 @@ String userId;
                 startActivity(new Intent(Dashboard1.this, UploadMain.class));
             }
         });
-
+*/
 
 
 

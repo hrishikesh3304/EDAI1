@@ -75,7 +75,21 @@ public class Login extends AppCompatActivity {
             {
                 if(task.isSuccessful())
                 {
-                    startActivity(new Intent(Login.this,Dashboard1.class));
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                    if(sh.getString("User_Type", "").equals("Doctor"))
+                    {
+                        Intent intent = new Intent(Login.this,DoctorDashboard.class);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(Login.this,Dashboard1.class);
+                        startActivity(intent);
+
+
+
+                    }
+
                 }
                 else{
                     Toast.makeText(Login.this, "Enter correct email and password ", Toast.LENGTH_SHORT).show();
