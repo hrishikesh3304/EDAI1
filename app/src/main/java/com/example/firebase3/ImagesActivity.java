@@ -1,5 +1,6 @@
 package com.example.firebase3;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,7 +85,17 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
+        Upload selectedItem = mUploads.get(position);
+        String pdfUrl = selectedItem.getPdfUrl();
+        Toast.makeText(this, "Opening PDF file: " + pdfUrl, Toast.LENGTH_SHORT).show();
+        if (pdfUrl != null) {
+            PDFView pdfView = findViewById(R.id.pdf_view);
+            pdfView.fromUri(Uri.parse(pdfUrl)).load();
+        } else {
+            Toast.makeText(this, "PDF file not found", Toast.LENGTH_SHORT).show();
+        }
+        PDFView pdfView = findViewById(R.id.pdf_view);
+
     }
 
     @Override
@@ -96,8 +108,8 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         Upload selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        StorageReference pdfRef = mStorage.getReferenceFromUrl(selectedItem.getPdfUrl());
+        pdfRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
