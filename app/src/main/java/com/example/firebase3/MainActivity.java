@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             constraintLayout.setBackgroundResource(R.color.teal_700);
         }
 
+        //HAAD
+
          button2.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
