@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //HAAD
+        //ATA TAR HAADACH
 
          button2.setOnClickListener(new View.OnClickListener() {
              @Override
