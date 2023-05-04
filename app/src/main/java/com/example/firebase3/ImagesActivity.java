@@ -1,7 +1,9 @@
 package com.example.firebase3;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +59,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mAdapter.setOnItemClickListener(ImagesActivity.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(("uploads"));
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("pdf");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,7 +68,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 mUploads.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
+                    Upload upload = dataSnapshot.getValue(Upload.class);
                     upload.setKey(postSnapshot.getKey());
                     mUploads.add(upload);
                 }
@@ -81,6 +84,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
+        //
     }
 
     @Override
@@ -89,8 +93,9 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         String pdfUrl = selectedItem.getPdfUrl();
         Toast.makeText(this, "Opening PDF file: " + pdfUrl, Toast.LENGTH_SHORT).show();
         if (pdfUrl != null) {
-            PDFView pdfView = findViewById(R.id.pdf_view);
-            pdfView.fromUri(Uri.parse(pdfUrl)).load();
+            Intent intent = new Intent(v.getContext(), pdfView.class);
+            intent.putExtra("url", upload);
+            startActivity(intent);
         } else {
             Toast.makeText(this, "PDF file not found", Toast.LENGTH_SHORT).show();
         }
@@ -105,17 +110,22 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     @Override
     public void onDeleteClick(int position) {
-        Upload selectedItem = mUploads.get(position);
-        final String selectedKey = selectedItem.getKey();
-
-        StorageReference pdfRef = mStorage.getReferenceFromUrl(selectedItem.getPdfUrl());
-        pdfRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImagesActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Upload upload = mUploads.get(position);
+        String location = upload.getPdfUrl();
+        if (!TextUtils.isEmpty(location)) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference imageRef = storage.getReferenceFromUrl(location);
+            imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(ImagesActivity.this, "Pdf deleted", Toast.LENGTH_SHORT).show();
+                    mDatabaseRef.child(upload.getKey()).removeValue();
+                    mUploads.remove(position);
+                }
+            });
+        } else {
+            Toast.makeText(ImagesActivity.this, "Error deleting image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -124,3 +134,4 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 }
+//kay he Chinmayee
