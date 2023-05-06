@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.firebase3.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -35,7 +36,6 @@ public class pdfView extends AppCompatActivity {
         new RetrivePdfStream().execute(urls);
     }
 
-    // Retrieving the pdf file using url
     class RetrivePdfStream extends AsyncTask<String, Void, InputStream> {
 
         @Override
@@ -59,7 +59,11 @@ public class pdfView extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(InputStream inputStream) {
-            pdfView.fromStream(inputStream).load();
+            if (inputStream != null) {
+                pdfView.fromStream(inputStream).load();
+            } else {
+                Toast.makeText(pdfView.this, "Kuchh bhi kar", Toast.LENGTH_SHORT).show();
+            }
             dialog.dismiss();
         }
     }
