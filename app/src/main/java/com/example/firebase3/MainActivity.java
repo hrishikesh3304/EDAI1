@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             constraintLayout.setBackgroundResource(R.color.teal_700);
         }
 
+        //HAAD
+        //ATA TAR HAADACH
+
          button2.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
