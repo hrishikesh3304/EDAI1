@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
          TextView textView;
          final ConstraintLayout constraintLayout;
 
-
          button2=findViewById(R.id.button2);
          button3=findViewById(R.id.button4);
          textView=findViewById(R.id.textView);

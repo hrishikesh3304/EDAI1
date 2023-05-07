@@ -26,21 +26,20 @@ String userId;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard1);
         titleHome = findViewById(R.id.titleHome);
-        CardView cardDocumnet;
+        CardView cardMyFamily;
         CardView cardMyMedicine;
         CardView cardProfile;
-        CardView cardBill;
+        CardView cardMyDoctors;
 
 
-        cardDocumnet = findViewById(R.id.cardDocumnet);
+        cardMyFamily = findViewById(R.id.cardDocumnet);
         cardMyMedicine = findViewById(R.id.cardMyMedicine);
         cardProfile = findViewById(R.id.cardProfile);
-        cardBill = findViewById(R.id.cardBill);
+        cardMyDoctors = findViewById(R.id.cardBill);
 
 
         fAuth = FirebaseAuth.getInstance();
         fStore= FirebaseFirestore.getInstance();
-
         userId = fAuth.getCurrentUser().getUid();
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
@@ -70,6 +69,16 @@ String userId;
                 startActivity(new Intent(Dashboard1.this, UploadMain.class));
             }
         });
+
+        cardMyDoctors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+
+            }
+        });
+
+
 
      /*   cardDocumnet.setOnClickListener(new View.OnClickListener()
         {
