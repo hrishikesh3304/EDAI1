@@ -4,79 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#6B77E5"
-    tools:context=".MainActivity">
+    tools:context=".UploadMain">
 
-    <Button
-        android:id="@+id/button_choose_image1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:padding="20dp"
+        android:background="@drawable/linear_back">
 
-        android:text="Choose file" />
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.03"
+            android:text="Select PDF File"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/edit_file_text_name"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-
-        android:layout_marginEnd="42dp"
-        android:layout_toEndOf="@+id/button_choose_image1"
-        android:hint="Enter File Name"
-        android:textColor="@color/white" />
-
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:layout_above="@id/progress_bar"
-        android:layout_below="@id/edit_file_text_name"
-        android:layout_marginTop="16dp" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/button_upload"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_below="@id/ll1"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edittext_back"
+        android:fontFamily="@font/poppins_regular"
+        android:hint="Click Twice To Select PDF"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.02"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey_800"
+        android:textSize="16sp" />
 
     <Button
-        android:id="@+id/button_upload"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editText"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_click_ripple"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="UPLOAD FILE"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.06"
+        android:text="@string/upload_file"
+        android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="19sp" />
 
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:text="Upload" />
-
-    <TextView
-        android:id="@+id/text_view_show_uploads"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnRead"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/button_upload"
-        android:layout_alignEnd="@id/button_upload"
-        android:layout_alignParentBottom="@+id/button_upload"
-        android:layout_marginStart="25dp"
+        android:layout_below="@id/btn"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_click_ripple"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="SHOW UPLOADS"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.06"
+        android:onClick="retrievePDFs"
+        android:text="@string/retrieve_files"
+        android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="19sp" />
 
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="-141dp"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:text="Show Uploads"
-        android:textSize="16dp" />
 </RelativeLayout>

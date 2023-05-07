@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,43 +15,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Firebase3"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".UploadMain"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8006676438408482~4669310424" />
+
         <activity
             android:name=".DoctorList"
             android:exported="false" />
-        <activity
-            android:name=".pdfView"
-            android:exported="false" />
+
         <activity
             android:name=".DoctorDashboard"
             android:exported="false" />
         <activity
             android:name=".userType"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".UploadMain"
-            android:exported="false" />
-        <activity
-            android:name=".Image_ItemActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ImagesActivity"
-            android:exported="false" />
+
+
         <activity
             android:name=".Uploaddoc"
             android:exported="false" />
         <activity
             android:name=".viewinvoices"
             android:exported="false" />
-        <activity
-            android:name=".incvoicesupload"
-            android:exported="false" />
+
         <activity
             android:name=".viewprofile"
             android:exported="false" />
@@ -73,6 +70,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".RetrievePDFActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
