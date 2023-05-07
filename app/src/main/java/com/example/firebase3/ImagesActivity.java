@@ -90,12 +90,14 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         String pdfUrl = selectedItem.getPdfUrl();
         Toast.makeText(this, "Opening PDF file: " + pdfUrl, Toast.LENGTH_SHORT).show();
         if (pdfUrl != null) {
-            Intent intent = new Intent(this, pdfView.class);
-            intent.putExtra("url", pdfUrl);
+            String pdfUriString = getIntent().getStringExtra("pdfUri");
+            Intent intent;
+            intent = new Intent(this, pdfView.class);
+            intent.putExtra("pdfUriString", pdfUriString);
             startActivity(intent);
         } else {
             Toast.makeText(this, "PDF file not found", Toast.LENGTH_SHORT).show();
-        }
+        };
     }
 
     @Override

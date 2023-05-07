@@ -1,24 +1,22 @@
 package com.example.firebase3;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.example.firebase3.R;
-import com.github.barteksc.pdfviewer.PDFView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class pdfView extends AppCompatActivity {
 
-    String urls;
     PDFView pdfView;
     ProgressDialog dialog;
 
@@ -32,38 +30,47 @@ public class pdfView extends AppCompatActivity {
         dialog.setMessage("Loading..");
         dialog.show();
 
-        urls = getIntent().getStringExtra("url");
-        new RetrivePdfStream().execute(urls);
-    }
+        String pdfUriString = getIntent().getStringExtra("pdfUriString");
 
-    class RetrivePdfStream extends AsyncTask<String, Void, InputStream> {
-
-        @Override
-        protected InputStream doInBackground(String... strings) {
-            InputStream inputStream = null;
-            try {
-
-                URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                if (urlConnection.getResponseCode() == 200) {
-                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                }
-            }
-
-            catch (IOException e) {
-                return null;
-            }
-            return inputStream;
+        if (pdfUriString == null || pdfUriString.isEmpty()) {
+            Log.d("PDFView", "PDF URI: " + pdfUriString);
+            finish();
+            return;
         }
 
-        @Override
-        protected void onPostExecute(InputStream inputStream) {
-            if (inputStream != null) {
-                pdfView.fromStream(inputStream).load();
-            } else {
-                Toast.makeText(pdfView.this, "Kuchh bhi kar", Toast.LENGTH_SHORT).show();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(pdfUriString);
+
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                storageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        pdfView.fromBytes(bytes).load();
+                        dialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(pdfView.this, "Failed to load PDF", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(pdfView.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
