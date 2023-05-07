@@ -127,8 +127,7 @@ public class UploadMain extends AppCompatActivity {
 
     private void uploadFile() {
         if (uri != null) {
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(uri));
+            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(uri));
 
             mUploadTask = fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
