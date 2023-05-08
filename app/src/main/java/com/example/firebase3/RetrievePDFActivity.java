@@ -18,6 +18,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import com.example.firebase3.model.FileinModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,8 @@ public class RetrievePDFActivity extends AppCompatActivity {
     private DatabaseReference pRef;
     Query query;
     ProgressBar progressBar;
+    FirebaseAuth fAuth;
+    String UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,9 @@ public class RetrievePDFActivity extends AppCompatActivity {
 
     private void displayPdfs() {
 
-        pRef = FirebaseDatabase.getInstance().getReference().child("pdfs");
+        fAuth = FirebaseAuth.getInstance();
+        UID = fAuth.getCurrentUser().getUid();
+        pRef = FirebaseDatabase.getInstance().getReference().child("pdfs").child(UID);
         pdfRecyclerView = findViewById(R.id.recyclerView);
         pdfRecyclerView.setHasFixedSize(true);
         pdfRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

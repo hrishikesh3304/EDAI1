@@ -19,8 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.firebase3.model.FileinModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -35,6 +37,9 @@ public class UploadMain extends AppCompatActivity {
 
     StorageReference storageReference;
     DatabaseReference databaseReference;
+    FirebaseAuth fAuth;
+    String UID;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -122,19 +127,20 @@ public class UploadMain extends AppCompatActivity {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         while (!uriTask.isComplete());
                         Uri uri = uriTask.getResult();
+                        fAuth = FirebaseAuth.getInstance();
+
+                        UID = fAuth.getCurrentUser().getUid();
 
                         FileinModel fileinModel = new FileinModel(edit.getText().toString(), uri.toString()); //get the views from the model class
-                        databaseReference.child(databaseReference.push().getKey()).setValue(fileinModel);// push the value into the realtime database
+                        databaseReference.child(UID).child(databaseReference.push().getKey()).setValue(fileinModel);// push the value into the realtime database
                         Toast.makeText(UploadMain.this, "File Uploaded Successfully!!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
-
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                         float percent = (100 * snapshot.getBytesTransferred())/ snapshot.getTotalByteCount();
                         pd.setMessage("Uploaded : "+ (int) percent + "%");
-                        //dfh
                     }
                 });
 
