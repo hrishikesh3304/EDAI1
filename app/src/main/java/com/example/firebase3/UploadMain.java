@@ -132,6 +132,7 @@ public class UploadMain extends AppCompatActivity {
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                         float percent = (100 * snapshot.getBytesTransferred())/ snapshot.getTotalByteCount();
                         pd.setMessage("Uploaded : "+ (int) percent + "%");
+                        //dfh
                     }
                 });
 
