@@ -31,7 +31,7 @@ import java.io.File;
 public class UploadMain extends AppCompatActivity {
 
     EditText edit;
-    Button uploadBTn;
+    Button uploadBTn, selectBTN;
 
     StorageReference storageReference;
     DatabaseReference databaseReference;
@@ -44,11 +44,13 @@ public class UploadMain extends AppCompatActivity {
 
         edit = findViewById(R.id.editText);
         uploadBTn = findViewById(R.id.btn);
+        selectBTN = findViewById(R.id.btnselect);
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("pdfs");
         uploadBTn.setEnabled(false);
-        edit.setOnClickListener(new View.OnClickListener() {
+        selectBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectPDF();
