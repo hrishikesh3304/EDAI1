@@ -44,7 +44,7 @@ public class RetrievePDFActivity extends AppCompatActivity {
     }
 
     private void displayPdfs() {
-
+        //ertdfgfgd
         fAuth = FirebaseAuth.getInstance();
         UID = fAuth.getCurrentUser().getUid();
         pRef = FirebaseDatabase.getInstance().getReference().child("pdfs").child(UID);
