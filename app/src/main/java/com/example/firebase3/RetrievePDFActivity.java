@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class RetrievePDFActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     String UID;
+    TextView titleHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +46,17 @@ public class RetrievePDFActivity extends AppCompatActivity {
     }
 
     private void displayPdfs() {
-        //ertdfgfgd
+
         fAuth = FirebaseAuth.getInstance();
         UID = fAuth.getCurrentUser().getUid();
-        pRef = FirebaseDatabase.getInstance().getReference().child("pdfs").child(UID);
+        pRef = FirebaseDatabase.getInstance().getReference().child("pdfs").child(UID).child(getIntent().getExtras().getString("TypeofDoc"));
         pdfRecyclerView = findViewById(R.id.recyclerView);
         pdfRecyclerView.setHasFixedSize(true);
         pdfRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
-
+        titleHome = findViewById(R.id.titleHome);
+        titleHome.setText(getIntent().getExtras().getString("TypeofDoc"));
         query = pRef.orderByChild("filename");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -64,7 +66,7 @@ public class RetrievePDFActivity extends AppCompatActivity {
                     showPdf();
                 }else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RetrievePDFActivity.this, ":", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RetrievePDFActivity.this, ":", Toast.LENGTH_SHORT).show();
                 }
             }
 

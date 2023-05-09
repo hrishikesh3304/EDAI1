@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6B77E5"
     tools:context=".UploadMain">
+
+    <TextView
+        android:id="@+id/titleHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload File"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"/> />
 
 
 
@@ -12,18 +24,17 @@
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/titleHome"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/edittext_back"
-        android:fontFamily="@font/poppins_regular"
+        android:background="@color/white"
         android:hint="Enter name of file"
+        android:textColorHint="@color/black"
         android:includeFontPadding="false"
-        android:letterSpacing="0.02"
         android:padding="12dp"
         android:textColor="@color/black"
-        android:textColorHint="@color/grey_800"
         android:textSize="16sp" />
 
     <Button
@@ -34,11 +45,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_click_ripple"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="SELECT FILE"
+        app:cardBackgroundColor="@color/purple_700"
+        android:text="SELECT FILE"
         android:includeFontPadding="false"
-        android:letterSpacing="0.06"
-        android:text="@string/upload_file"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="19sp" />
@@ -47,10 +56,15 @@
         android:id="@+id/spinner1"
         android:layout_below="@id/btnselect"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"/>
+
+
 
 
 
@@ -61,13 +75,10 @@
         android:layout_below="@id/spinner1"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="80dp"
         android:background="@drawable/button_click_ripple"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="UPLOAD FILE"
+        app:cardBackgroundColor="@color/purple_700"
+        android:text="UPLOAD FILE"
         android:includeFontPadding="false"
-        android:letterSpacing="0.06"
-        android:text="@string/upload_file"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="19sp" />
@@ -78,15 +89,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_click_ripple"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="SHOW UPLOADS"
+        app:cardBackgroundColor="@color/purple_700"
+        android:text="SHOW UPLOADS"
         android:includeFontPadding="false"
-        android:letterSpacing="0.06"
         android:onClick="retrievePDFs"
-        android:text="@string/retrieve_files"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="19sp" />

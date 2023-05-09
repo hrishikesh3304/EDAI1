@@ -36,6 +36,6 @@ public class CustomListAdapter extends ArrayAdapter<ListClass>{
         imageView.setImageResource(listClass.imageId);
         textView.setText(listClass.name);
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 }

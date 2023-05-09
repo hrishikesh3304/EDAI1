@@ -43,6 +43,8 @@ public class UploadMain extends AppCompatActivity {
     FirebaseAuth fAuth;
     String UID;
 
+    String docType;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,7 +67,7 @@ public class UploadMain extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("pdfs");
         uploadBTn.setEnabled(false);
-        String docType = dropdown.getSelectedItem().toString();
+        docType = dropdown.getSelectedItem().toString();
 
         //String type = items[0];
         //Log.d("QWRETY", "type" + type);
@@ -118,7 +120,7 @@ public class UploadMain extends AppCompatActivity {
             uploadBTn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    uploadPDF(data.getData());
+                    uploadPDF(data.getData(), docType);
                 }
             });
 
@@ -127,7 +129,7 @@ public class UploadMain extends AppCompatActivity {
 
     }
 
-    private void uploadPDF(Uri data) {
+    private void uploadPDF(Uri data, String docType) {
         final ProgressDialog  pd = new ProgressDialog(this);
         pd.setTitle("File Uploading..");
         pd.show();
@@ -146,7 +148,7 @@ public class UploadMain extends AppCompatActivity {
                         UID = fAuth.getCurrentUser().getUid();
 
                         FileinModel fileinModel = new FileinModel(edit.getText().toString(), uri.toString()); //get the views from the model class
-                        databaseReference.child(UID).child(databaseReference.push().getKey()).setValue(fileinModel);// push the value into the realtime database
+                        databaseReference.child(UID).child(docType).child(databaseReference.push().getKey()).setValue(fileinModel);// push the value into the realtime database
                         Toast.makeText(UploadMain.this, "File Uploaded Successfully!!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
