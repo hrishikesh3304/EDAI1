@@ -7,9 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +37,7 @@ public class UploadMain extends AppCompatActivity {
 
     EditText edit;
     Button uploadBTn, selectBTN;
-
+    Spinner dropdown;
     StorageReference storageReference;
     DatabaseReference databaseReference;
     FirebaseAuth fAuth;
@@ -50,11 +53,22 @@ public class UploadMain extends AppCompatActivity {
         edit = findViewById(R.id.editText);
         uploadBTn = findViewById(R.id.btn);
         selectBTN = findViewById(R.id.btnselect);
-
-
+        //get the spinner from the xml.
+        dropdown = findViewById(R.id.spinner1);
+//create a list of items for the spinner.
+        String[] items = new String[]{"Medical Invoices", "Medical Reports", "Other Documents"};
+//create an adapter to describe how the items are displayed, adapters are used in several places in android.
+//There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+//set the spinners adapter to the previously created one.
+        dropdown.setAdapter(adapter);
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("pdfs");
         uploadBTn.setEnabled(false);
+        String docType = dropdown.getSelectedItem().toString();
+
+        //String type = items[0];
+        //Log.d("QWRETY", "type" + type);
         selectBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +162,7 @@ public class UploadMain extends AppCompatActivity {
 
 
     public void retrievePDFs(View view) {
-        startActivity(new Intent(UploadMain.this, RetrievePDFActivity.class));
+        startActivity(new Intent(UploadMain.this, PDFselect.class));
     }
 
     @Override

@@ -6,34 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".UploadMain">
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:background="@drawable/linear_back">
 
-        <TextView
-            android:id="@+id/hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:includeFontPadding="false"
-            android:letterSpacing="0.03"
-            android:text="Select PDF File"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
-
-    </LinearLayout>
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll1"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edittext_back"
@@ -63,11 +43,22 @@
         android:textColor="@color/white"
         android:textSize="19sp" />
 
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_below="@id/btnselect"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"/>
+
+
+
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnselect"
+        android:layout_below="@id/spinner1"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="80dp"
