@@ -8,21 +8,39 @@
     android:background="#6B77E5"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/titleHome"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="#fff"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"/> />
+        android:orientation="horizontal"
+        android:id="@id/titleHome1">
+
+        <TextView
+            android:id="@+id/titleHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"/>
+        <ImageView
+            android:id="@+id/qr"
+            android:layout_alignParentEnd="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/qr"
+            >
+
+        </ImageView>
+
+    </RelativeLayout>>
+
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/titleHome"
+        android:layout_below="@+id/titleHome1"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"

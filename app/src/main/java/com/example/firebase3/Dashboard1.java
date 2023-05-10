@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ TextView titleHome;
 FirebaseAuth fAuth;
 FirebaseFirestore fStore;
 String userId;
+String temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +32,14 @@ String userId;
         CardView cardMyMedicine;
         CardView cardProfile;
         CardView cardMyDoctors;
+        ImageView qr;
 
 
         cardMyFamily = findViewById(R.id.cardDocumnet);
         cardMyMedicine = findViewById(R.id.cardMyMedicine);
         cardProfile = findViewById(R.id.cardProfile);
         cardMyDoctors = findViewById(R.id.cardBill);
+        qr = findViewById(R.id.qr);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -47,6 +51,7 @@ String userId;
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 titleHome.setText("Welcome " + documentSnapshot.getString("Fullname"));
+                temp= documentSnapshot.getString("Fullname");
 
             }
         });
@@ -75,6 +80,15 @@ String userId;
             public void onClick(View view) {
                 Intent intent;
 
+            }
+        });
+
+        qr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard1.this, PatientQr.class);
+                i.putExtra("Title", temp);
+                startActivity(i);
             }
         });
 

@@ -147,6 +147,8 @@ public class UploadMain extends AppCompatActivity {
 
                         UID = fAuth.getCurrentUser().getUid();
 
+                        Log.d("QWERTY", "Document Type ----->" + docType );
+
                         FileinModel fileinModel = new FileinModel(edit.getText().toString(), uri.toString()); //get the views from the model class
                         databaseReference.child(UID).child(docType).child(databaseReference.push().getKey()).setValue(fileinModel);// push the value into the realtime database
                         Toast.makeText(UploadMain.this, "File Uploaded Successfully!!", Toast.LENGTH_SHORT).show();

@@ -53,6 +53,8 @@ public class Login extends AppCompatActivity {
                 String email2=editTextTextEmailAddress2.getText().toString();
                 String password2=editTextTextPassword2.getText().toString();
 
+
+
                 /*System.out.print("email="+email1);
                 System.out.print("pwd="+password1); */
 
@@ -63,6 +65,12 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     login(email2,password2);
+                    SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sh.edit();
+                    myEdit.putString("UserName", email2);
+                    myEdit.putString("Password",password2);
+                    myEdit.commit();
+
                 }
             }
         });

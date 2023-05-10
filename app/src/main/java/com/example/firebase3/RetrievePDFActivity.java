@@ -3,6 +3,7 @@ package com.example.firebase3;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class RetrievePDFActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         UID = fAuth.getCurrentUser().getUid();
+        Log.d("QWERTY", "type: " + getIntent().getExtras().getString("TypeofDoc"));
         pRef = FirebaseDatabase.getInstance().getReference().child("pdfs").child(UID).child(getIntent().getExtras().getString("TypeofDoc"));
         pdfRecyclerView = findViewById(R.id.recyclerView);
         pdfRecyclerView.setHasFixedSize(true);
