@@ -33,7 +33,7 @@ public class PatientQr extends AppCompatActivity {
         PatientName.setText(getIntent().getExtras().getString("Title"));
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-        String QRtext = "|" + sh.getString("UserName", "") + "|" + sh.getString("Password", "") + "|" ;
+        String QRtext = getIntent().getExtras().getString("Title") +  "|" + sh.getString("UserName", "") + "|" + sh.getString("Password", "") + "|" ;
 
 
         MultiFormatWriter mWriter = new MultiFormatWriter();
