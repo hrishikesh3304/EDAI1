@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +57,11 @@ public class DoctorDashboard extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 titleHome.setText("Welcome Dr. " + documentSnapshot.getString("Fullname"));
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sh.edit();
+                myEdit.putString("Doctor_name", documentSnapshot.getString("Fullname") );
+                myEdit.commit();
 
     }
 });}}

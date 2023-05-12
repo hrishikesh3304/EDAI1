@@ -5,12 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +40,7 @@ public class MyPatients extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    String DocName;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -63,12 +68,9 @@ public class MyPatients extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
 
-                //String DocName =  documentSnapshot.getString("Fullname");
-                String DocName = "Hrishikesh Potnis";
-
-
-                String finalDocName = DocName;
-                reference.child(DocName).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                DocName = documentSnapshot.getString("Fullname");
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                reference.child(sh.getString("Doctor_name", "")).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 Log.d("QWERTY", "onComplete: --------------> " + DocName);
@@ -81,9 +83,11 @@ public class MyPatients extends AppCompatActivity {
                     while (i.hasNext()) {
                         String PName = i.next().getKey();
                         Log.d("WERQER", "PATIENT NAME -------" + PName);
-                        ListClass element = new ListClass(PName, R.drawable.patients);
+                        ListClass element = new ListClass(PName, R.drawable.mypatient);
                         Patient_name.add(PName);
                         classArrayList.add(element);
+                        Log.d("QWERTY", "ArrayList---------->" + classArrayList);
+                        Log.d("oiwejjowi", "element --------------------" + element);
                     }
                 }}});}});
 
@@ -92,12 +96,22 @@ public class MyPatients extends AppCompatActivity {
                 //Log.d("QWERTY", String.valueOf(classArrayList));
 
                 listView.setAdapter(listAdapter);
-                listView.setClickable(true);
+                listView.setClickable(true);listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MyPatients.this, "Patient:" + Patient_name.get(i) , Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
 
                     plus.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
+                            Intent i = new Intent(MyPatients.this, AddPatient.class);
+                            i.putExtra("docName",DocName);
+                            startActivity(i);
 
 
                         }

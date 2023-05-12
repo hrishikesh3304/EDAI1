@@ -1,6 +1,7 @@
 package com.example.firebase3;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -19,6 +20,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Login extends AppCompatActivity {
 
@@ -27,6 +33,7 @@ public class Login extends AppCompatActivity {
     Button button;
     FirebaseAuth auth;
     ConstraintLayout constraintLayout;
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -65,11 +72,16 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     login(email2,password2);
+
+
+
+
                     SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sh.edit();
                     myEdit.putString("UserName", email2);
                     myEdit.putString("Password",password2);
                     myEdit.commit();
+
 
                 }
             }
