@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#6B77E5">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/camView_Mode2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 
 
 </RelativeLayout>

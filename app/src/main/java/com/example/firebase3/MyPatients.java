@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -39,10 +40,10 @@ public class MyPatients extends AppCompatActivity {
     ImageView plus;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    FirebaseAuth auth;
     String userId;
     String DocName;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,17 +90,29 @@ public class MyPatients extends AppCompatActivity {
                         Log.d("QWERTY", "ArrayList---------->" + classArrayList);
                         Log.d("oiwejjowi", "element --------------------" + element);
                     }
-                }}});}});
-
+                }
                 CustomListAdapter listAdapter = new CustomListAdapter(MyPatients.this, classArrayList);
 
                 //Log.d("QWERTY", String.valueOf(classArrayList));
 
                 listView.setAdapter(listAdapter);
+            }
+                });}});
+
+
                 listView.setClickable(true);listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MyPatients.this, "Patient:" + Patient_name.get(i) , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MyPatients.this, "Patient:" + Patient_name.get(i) , Toast.LENGTH_SHORT).show();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Doctors");
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                //String email2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("username").get().toString();
+                //String password2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("password").get().toString();
+                //Log.d("QWERTY", "------------------------------------>"+email2+"--------------" +password2);
+
+                //login(email2,password2);
             }
 
         });
@@ -116,4 +129,33 @@ public class MyPatients extends AppCompatActivity {
 
                         }
             });
-                }}
+                }
+
+
+    private void login(String email, String password)
+    {
+
+        fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(MyPatients.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task)
+            {
+                if(task.isSuccessful())
+                {
+                        Intent intent = new Intent(MyPatients.this,Dashboard1.class);
+                        startActivity(intent);
+                }
+                else{
+                    Toast.makeText(MyPatients.this, "Enter correct email and password ", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+        });
+    }
+
+
+
+
+
+}
