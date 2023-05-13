@@ -2,10 +2,12 @@ package com.example.firebase3;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -93,18 +95,22 @@ public class MyPatients extends AppCompatActivity {
                         Log.d("oiwejjowi", "element --------------------" + element);
                     }
                 }
+
                 CustomListAdapter listAdapter = new CustomListAdapter(MyPatients.this, classArrayList);
 
                 //Log.d("QWERTY", String.valueOf(classArrayList));
 
                 listView.setAdapter(listAdapter);
             }
-                });}});
+                });
+            }});
 
 
-                listView.setClickable(true);listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listView.setClickable(true);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 //Toast.makeText(MyPatients.this, "Patient:" + Patient_name.get(i) , Toast.LENGTH_SHORT).show();
                 //FirebaseDatabase database = FirebaseDatabase.getInstance();
                 //DatabaseReference reference = database.getReference("Doctors");
@@ -139,15 +145,50 @@ public class MyPatients extends AppCompatActivity {
                     }
                 });
 
-
-                //String email2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("username").get().toString();
-                //String password2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("password").get().toString();
-                //Log.d("QWERTY", "------------------------------------>"+email2+"--------------" +password2);
-
-               // login(email2,password2);
             }
 
         });
+
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MyPatients.this);
+                        builder.setMessage("Do you want to remove "+Patient_name.get(i)+" ?" );
+                        builder.setTitle("Alert !");
+                        builder.setCancelable(false);
+
+                        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                            //remove cha code ithe lihaychay
+
+                            SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference reference = database.getReference("Doctors");
+
+                            reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).removeValue();
+                            classArrayList.remove(i);
+                            Patient_name.remove(i);
+
+                            Toast.makeText(MyPatients.this, "Patient removed successfully", Toast.LENGTH_SHORT).show();
+
+                        });
+
+
+                        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                            dialog.cancel();
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        return true;
+                    }
+                });
+
+
 
 
                     plus.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +198,6 @@ public class MyPatients extends AppCompatActivity {
                             Intent i = new Intent(MyPatients.this, AddPatient.class);
                             i.putExtra("docName",DocName);
                             startActivity(i);
-
 
                         }
             });

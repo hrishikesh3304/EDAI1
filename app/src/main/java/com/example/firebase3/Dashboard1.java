@@ -65,6 +65,10 @@ String temp;
                 else {
                     titleHome.setText("Welcome " + documentSnapshot.getString("Fullname"));
 
+                    SharedPreferences.Editor myEdit = sh.edit();
+                    myEdit.putString("Patient_name", documentSnapshot.getString("Fullname") );
+                    myEdit.commit();
+
                 }
                 temp = documentSnapshot.getString("Fullname");
 
@@ -93,8 +97,8 @@ String temp;
         cardMyDoctors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-
+                Intent i = new Intent(Dashboard1.this, MyDoctors.class);
+                startActivity(i);
             }
         });
 
