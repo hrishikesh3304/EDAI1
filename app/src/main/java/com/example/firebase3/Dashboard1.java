@@ -4,11 +4,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,8 +53,20 @@ String temp;
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                titleHome.setText("Welcome " + documentSnapshot.getString("Fullname"));
-                temp= documentSnapshot.getString("Fullname");
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                if(sh.getString("User_Type", "").equals("Doctor"))
+                    {
+                        titleHome.setText("Patient: " + documentSnapshot.getString("Fullname"));
+                        //qr.setEnabled(false);
+                        //cardMyFamily.setEnabled(false);
+                    }
+                else {
+                    titleHome.setText("Welcome " + documentSnapshot.getString("Fullname"));
+
+                }
+                temp = documentSnapshot.getString("Fullname");
 
             }
         });
@@ -86,32 +101,45 @@ String temp;
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Dashboard1.this, PatientQr.class);
-                i.putExtra("Title", temp);
-                startActivity(i);
+
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                if(sh.getString("User_Type", "").equals("Doctor"))
+                {
+                    Toast.makeText(Dashboard1.this, "Doctor's cannot access this particular field!", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Intent i = new Intent(Dashboard1.this, PatientQr.class);
+                    i.putExtra("Title", temp);
+                    startActivity(i);
+                }
+
             }
         });
 
 
 
-     /*   cardDocumnet.setOnClickListener(new View.OnClickListener()
+       cardMyFamily.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(Dashboard1.this, UploadMain.class));
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                if(sh.getString("User_Type", "").equals("Doctor"))
+                {
+                    Toast.makeText(Dashboard1.this, "Doctor's cannot access this particular field!", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    startActivity(new Intent(Dashboard1.this, UploadMain.class));
+                }
             }
         });
 
-        cardBill.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                startActivity(new Intent(Dashboard1.this, UploadMain.class));
-            }
-        });
-*/
+
+
 
 
 

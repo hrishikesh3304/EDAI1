@@ -21,8 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -104,15 +106,45 @@ public class MyPatients extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(MyPatients.this, "Patient:" + Patient_name.get(i) , Toast.LENGTH_SHORT).show();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference reference = database.getReference("Doctors");
+                //FirebaseDatabase database = FirebaseDatabase.getInstance();
+                //DatabaseReference reference = database.getReference("Doctors");
 
                 SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                //String email2 = "test1@gmail.com";
+                //String password2 = "123456";
+
+                Log.d("QWERTY", "Patient------------------ " + Patient_name.get(i));
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("Doctors");
+                reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        QRclass qRclass = dataSnapshot.getValue(QRclass.class);
+
+                        String email1 = qRclass.getUsername();
+                        String password1 = qRclass.getPassword();
+
+                        Log.d("QWERTY", "------------------------------>" + email1 + "--------- " + password1);
+
+                        login(email1,password1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                        //Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+
                 //String email2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("username").get().toString();
                 //String password2 = reference.child(sh.getString("Doctor_name", "")).child(Patient_name.get(i)).child("password").get().toString();
                 //Log.d("QWERTY", "------------------------------------>"+email2+"--------------" +password2);
 
-                //login(email2,password2);
+               // login(email2,password2);
             }
 
         });
