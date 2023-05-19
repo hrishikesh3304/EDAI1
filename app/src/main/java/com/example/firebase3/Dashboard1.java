@@ -97,8 +97,19 @@ String temp;
         cardMyDoctors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Dashboard1.this, MyDoctors.class);
-                startActivity(i);
+                SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                if(sh.getString("User_Type", "").equals("Doctor"))
+                {
+                    Toast.makeText(Dashboard1.this, "Doctor's cannot access this particular field!", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Intent i = new Intent(Dashboard1.this, MyDoctors.class);
+                    i.putExtra("Title", temp);
+                    startActivity(i);
+                }
+
             }
         });
 
@@ -137,7 +148,10 @@ String temp;
 
                 }
                 else {
-                    startActivity(new Intent(Dashboard1.this, UploadMain.class));
+
+                    Intent i = new Intent(Dashboard1.this , MyFamily.class);
+                    startActivity(i);
+
                 }
             }
         });

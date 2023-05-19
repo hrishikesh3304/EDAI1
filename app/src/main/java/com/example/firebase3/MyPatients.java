@@ -88,7 +88,7 @@ public class MyPatients extends AppCompatActivity {
                     while (i.hasNext()) {
                         String PName = i.next().getKey();
                         Log.d("WERQER", "PATIENT NAME -------" + PName);
-                        ListClass element = new ListClass(PName, R.drawable.mypatient);
+                        ListClass element = new ListClass(PName, R.drawable.bigfamily);
                         Patient_name.add(PName);
                         classArrayList.add(element);
                         Log.d("QWERTY", "ArrayList---------->" + classArrayList);

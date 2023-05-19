@@ -21,6 +21,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AddFamily"
+            android:exported="false" />
+        <activity
+            android:name=".FamilyDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".MyFamily"
+            android:exported="false" />
+        <activity
             android:name=".MyDoctors"
             android:exported="false" />
         <activity

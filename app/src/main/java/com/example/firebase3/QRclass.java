@@ -20,6 +20,16 @@ public class QRclass {
 
     public QRclass(){}
 
+    public QRclass(String user_name , String pass , String name){
+
+        this.patient_name = name;
+        this.username = user_name;
+        this.password = pass;
+
+
+
+    }
+
     public QRclass(String TextFromQR) {
         String[] strsplit = TextFromQR.split("\\|");
         this.patient_name = strsplit[0];
