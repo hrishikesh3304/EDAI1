@@ -32,7 +32,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 
 
 
-public class AddPatient extends AppCompatActivity {
+public class AddFamilyMem extends AppCompatActivity {
 
     String TextFromQR;
     FirebaseAuth fAuth;
@@ -74,16 +74,16 @@ public class AddPatient extends AppCompatActivity {
                         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
 
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference reference = database.getReference("Doctors");
+                        DatabaseReference reference = database.getReference("Families");
 
                         QRclass patient = new QRclass(TextFromQR);
 
                         Log.d("QWERTY", "docName ------------>" + docName);
                         Log.d("QWERTY", "Patient--------->" + patient.getPatient_name() + "  " + patient.getUsername() + "  "  + patient.getPassword() );
 
-                        reference.child(sh.getString("Doctor_name","")).child(patient.getPatient_name()).setValue(patient);
+                        reference.child(getIntent().getExtras().getString("Family1")).child(patient.getPatient_name()).setValue(patient);
 
-                        Toast.makeText(AddPatient.this, "Patient added successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddFamilyMem.this, "Family Member added successfully!", Toast.LENGTH_SHORT).show();
 
 
                     }});

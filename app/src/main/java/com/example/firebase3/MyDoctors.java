@@ -88,6 +88,35 @@ public class MyDoctors extends AppCompatActivity {
 
         listView.setClickable(true);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MyDoctors.this);
+                alertDialog.setTitle("AlertDialog");
+                String[] items = {"View Only","View/Write"};
+                int checkedItem = 1;
+                alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+
+
+
+                                break;
+                            case 1:
+
+                                break;
+
+                        }
+                    }
+                });
+                AlertDialog alert = alertDialog.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
+            }
+        });
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -144,4 +173,9 @@ public class MyDoctors extends AppCompatActivity {
 
 
     }
+
+
+
+
+
 }
